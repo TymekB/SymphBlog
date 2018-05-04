@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="app_users")
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="app_admins")
+ * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
  */
-class User implements UserInterface, \Serializable
+class Admin implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -117,7 +117,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return ['ROLE_ADMIN'];
     }
 
     /**
