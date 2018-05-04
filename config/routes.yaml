@@ -1,3 +1,15 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+about:
+    path: /about
+    controller: App\Controller\HomeController::about
+
+contact:
+    path: /contact
+    controller: App\Controller\HomeController::contact
+
+services:
+    path: /services
+    controller: App\Controller\HomeController::services
