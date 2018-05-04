@@ -13,3 +13,7 @@ contact:
 services:
     path: /services
     controller: App\Controller\HomeController::services
+
+posts_index:
+    path: /
+    controller: App\Controller\PostsController::index
