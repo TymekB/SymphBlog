@@ -25,7 +25,8 @@ class UserType extends AbstractType
                     [
                         'type' => PasswordType::class,
                         'first_options' => ['label' => 'Password'],
-                        'second_options' => ['label' => "Repeat password"]
+                        'second_options' => ['label' => "Repeat password"],
+                        'invalid_message' => 'Password are not the same!'
                     ]
                 );
     }
