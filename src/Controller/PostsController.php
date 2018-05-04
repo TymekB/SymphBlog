@@ -9,8 +9,6 @@ class PostsController extends Controller
 {
     public function index()
     {
-        return $this->render('posts/index.html.twig', [
-            'controller_name' => 'PostsController',
-        ]);
+        return $this->render('posts/index.html.twig');
     }
 }

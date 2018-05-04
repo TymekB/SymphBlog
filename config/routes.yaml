@@ -21,6 +21,10 @@ login:
 logout:
     path: /logout
 
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
 posts_index:
     path: /
     controller: App\Controller\PostsController::index
