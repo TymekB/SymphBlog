@@ -32,7 +32,12 @@
                             Hello, {{ app.user.username }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Comments</a></li>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="#">Create new post</a></li>
+                            {% endif %}
+
                             <li><a href="{{ path('logout') }}">Logout</a></li>
                         </ul>
                     </li>
