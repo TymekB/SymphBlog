@@ -14,6 +14,13 @@ services:
     path: /services
     controller: App\Controller\HomeController::services
 
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+logout:
+    path: /logout
+
 posts_index:
     path: /
     controller: App\Controller\PostsController::index
