@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Form\UserType;
+use App\Form\PostType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class PostsController extends Controller
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findAll();
+            ->findBy([], ['createdAt' => "ASC"]);
 
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
@@ -22,12 +23,13 @@ class PostsController extends Controller
     public function create(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm(UserType::class, $post);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
             $post->setAdmin($this->getUser());
-            $post->setCreatedAt(new \DateTime('today'));
+            $post->setCreatedAt(new DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
