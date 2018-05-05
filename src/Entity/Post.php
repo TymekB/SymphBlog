@@ -17,12 +17,12 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      */
     private $header;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $body;
 
@@ -32,10 +32,10 @@ class Post
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $admin;
 
     public function getId()
     {
@@ -78,14 +78,14 @@ class Post
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getAdmin(): ?Admin
     {
-        return $this->user;
+        return $this->admin;
     }
 
-    public function setUser(?User $user): self
+    public function setAdmin(?Admin $admin): self
     {
-        $this->user = $user;
+        $this->admin = $admin;
 
         return $this;
     }

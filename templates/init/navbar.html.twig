@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{{ path('posts_index') }}">Posts</a>
+                    <a href="{{ path('index') }}">Posts</a>
                 </li>
                 <li>
                     <a href="{{ path('about') }}">About</a>
@@ -30,7 +30,9 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Hello, {{ app.user.username }}
-                            <span class="caret"></span></a>
+                            <span class="caret"></span>
+                        </a>
+
                         <ul class="dropdown-menu">
                             <li><a href="#">Comments</a></li>
 
@@ -49,8 +51,6 @@
                         <a href="{{ path('register') }}">Register</a>
                     </li>
                 {% endif %}
-
-
             </ul>
         </div>
     </div>
