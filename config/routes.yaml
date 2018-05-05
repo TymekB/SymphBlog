@@ -29,6 +29,6 @@ register:
     path: /register
     controller: App\Controller\RegistrationController::register
 
-#posts_index:
-#    path: /
-#    controller: App\Controller\PostsController::index
+post_create:
+    path: /post/create
+    controller: App\Controller\PostsController::create
