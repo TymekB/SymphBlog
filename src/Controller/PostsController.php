@@ -20,6 +20,19 @@ class PostsController extends Controller
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
 
+    public function show($id)
+    {
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->find($id);
+
+        if(!$post) {
+            throw $this->createNotFoundException("Post " . $id . " not found");
+        }
+
+        return $this->render('posts/show.html.twig', ['post' => $post]);
+    }
+
     public function create(Request $request)
     {
         $post = new Post();

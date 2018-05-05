@@ -28,5 +28,5 @@ security:
             provider: chain_provider
 
     access_control:
-        - { path: ^/post/*, roles: ROLE_ADMIN }
+        - { path: ^/post/create, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
