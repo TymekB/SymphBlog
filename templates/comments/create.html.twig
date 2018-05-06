@@ -1,9 +1,12 @@
 <div class="well">
     <h4>Leave a Comment:</h4>
-    <form role="form">
+        {{ form_start(form, {'action': path('comment_create', {'postId': post.id}), 'method': 'POST'}) }}
         <div class="form-group">
-            <textarea class="form-control" rows="3"></textarea>
+            {{ form_widget(form.body) }}
+            {{ form_errors(form.body) }}
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        {{ form_end(form) }}
 </div>

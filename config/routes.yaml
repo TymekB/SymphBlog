@@ -36,3 +36,8 @@ post_create:
 post_show:
     path: /post/show/{id}
     controller: App\Controller\PostsController::show
+
+comment_create:
+    path: /comment/create/{postId}
+    controller: App\Controller\CommentsController::create
+    methods: [POST]
