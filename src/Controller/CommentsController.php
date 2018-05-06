@@ -11,6 +11,17 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class CommentsController extends Controller
 {
+    public function list($postId)
+    {
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($postId);
+
+        if(!$post) {
+            return $this->createNotFoundException("Post " . $postId . ' not found!');
+        }
+
+        return $this->render('comments/list.html.twig', ['post' => $post]);
+    }
+
     public function create(Request $request, AuthorizationCheckerInterface $authChecker, $postId)
     {
         $comment = new Comment();
@@ -28,7 +39,6 @@ class CommentsController extends Controller
             if(!$authChecker->isGranted("IS_AUTHENTICATED_FULLY")) {
                 $this->addFlash('danger', 'You must be logged to add a comment!');
             } else {
-
                 $comment->setCreatedAt(new \DateTime());
                 $comment->setUser($this->getUser());
                 $comment->setPost($post);
@@ -36,6 +46,8 @@ class CommentsController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($comment);
                 $entityManager->flush();
+
+                $this->addFlash('success', 'Comment created!');
             }
 
             return $this->redirectToRoute("post_show", ['id' => $post->getId()]);

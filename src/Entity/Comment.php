@@ -74,14 +74,13 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser()
     {
         if($this->user) {
             return $this->user;
         } else if($this->admin) {
             return $this->admin;
         }
-
     }
 
     public function setUser(UserInterface $user): self
