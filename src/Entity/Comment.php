@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -75,24 +76,21 @@ class Comment
 
     public function getUser(): ?User
     {
-        return $this->user;
+        if($this->user) {
+            return $this->user;
+        } else if($this->admin) {
+            return $this->admin;
+        }
+
     }
 
-    public function setUser(?User $user): self
+    public function setUser(UserInterface $user): self
     {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getAdmin(): ?Admin
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(?Admin $admin): self
-    {
-        $this->admin = $admin;
+        if($user instanceof Admin) {
+            $this->admin = $user;
+        } else if($user instanceof User) {
+            $this->user = $user;
+        }
 
         return $this;
     }

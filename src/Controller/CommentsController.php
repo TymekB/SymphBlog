@@ -28,21 +28,17 @@ class CommentsController extends Controller
             if(!$authChecker->isGranted("IS_AUTHENTICATED_FULLY")) {
                 $this->addFlash('danger', 'You must be logged to add a comment!');
             } else {
-                if($authChecker->isGranted('ROLE_ADMIN')) {
-                    $comment->setAdmin($this->getUser());
-                } else {
-                    $comment->setUser($this->getUser());
-                }
 
                 $comment->setCreatedAt(new \DateTime());
+                $comment->setUser($this->getUser());
                 $comment->setPost($post);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($comment);
                 $entityManager->flush();
-
-                return $this->redirectToRoute("post_show", ['id' => $post->getId()]);
             }
+
+            return $this->redirectToRoute("post_show", ['id' => $post->getId()]);
         }
 
         return $this->render('comments/create.html.twig', ['form' => $form->createView(), 'post' => $post]);

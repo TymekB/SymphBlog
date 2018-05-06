@@ -38,6 +38,7 @@
             <!-- Comments Form -->
             {{ render(controller('App\\Controller\\CommentsController::create', {'postId': post.id})) }}
 
+            {% include 'init/messages.html.twig' %}
             <hr>
 
             <!-- Posted Comments -->
