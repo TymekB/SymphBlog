@@ -34,12 +34,6 @@ class Comment
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $admin;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -76,20 +70,12 @@ class Comment
 
     public function getUser()
     {
-        if($this->user) {
-            return $this->user;
-        } else if($this->admin) {
-            return $this->admin;
-        }
+        return $this->user;
     }
 
-    public function setUser(UserInterface $user): self
+    public function setUser(User $user): self
     {
-        if($user instanceof Admin) {
-            $this->admin = $user;
-        } else if($user instanceof User) {
-            $this->user = $user;
-        }
+        $this->user = $user;
 
         return $this;
     }

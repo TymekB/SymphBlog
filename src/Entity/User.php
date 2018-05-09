@@ -5,11 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="app_users")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="user_type", type="string")
+ * @DiscriminatorMap({"user" = "User", "admin" = "Admin"})
  */
 class User implements UserInterface, \Serializable
 {
@@ -18,27 +23,27 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
-    private $comments;
+    protected $comments;
 
     public function __construct()
     {
