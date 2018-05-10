@@ -29,4 +29,5 @@ security:
 
     access_control:
         - { path: ^/post/create, roles: ROLE_ADMIN }
+        - { path: ^/post/show/*, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
 

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +22,7 @@ class PostsController extends Controller
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -30,7 +32,23 @@ class PostsController extends Controller
             throw $this->createNotFoundException("Post " . $id . " not found");
         }
 
-        return $this->render('posts/show.html.twig', ['post' => $post]);
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setPost($post);
+            $comment->setCreatedAt(new DateTime());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', "Comment created");
+        }
+
+        return $this->render('posts/show.html.twig', ['post' => $post, 'form' => $commentForm->createView()]);
     }
 
     public function create(Request $request)
