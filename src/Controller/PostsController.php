@@ -17,7 +17,7 @@ class PostsController extends Controller
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy([], ['createdAt' => "ASC"]);
+            ->findBy([], ['createdAt' => "DESC"]);
 
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }

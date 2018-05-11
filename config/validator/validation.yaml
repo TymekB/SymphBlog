@@ -43,11 +43,24 @@ App\Entity\Post:
 
         body:
             - NotBlank:
-                message: "Body cannot be empty!"
+                message: "Post body cannot be empty!"
             - Length:
                 min: 50
                 max: 5000
-                minMessage: 'Body must be at least {{ limit }} characters long!'
-                maxMessage: 'Body cannot be longer than {{ limit }} characters!'
+                minMessage: 'Post body must be at least {{ limit }} characters long!'
+                maxMessage: 'Post body cannot be longer than {{ limit }} characters!'
+            - Regex:
+                pattern: "/[a-zA-Z]+/"
+
+App\Entity\Comment:
+    properties:
+        body:
+            - NotBlank:
+                message: "Comment cannot be empty!"
+            - Length:
+                min: 4
+                max: 255
+                minMessage: 'Comment must be at least {{ limit }} characters long!'
+                maxMessage: 'Comment cannot be longer than {{ limit }} characters!'
             - Regex:
                 pattern: "/[a-zA-Z]+/"
