@@ -7,11 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        return $this->render('home/index.html.twig');
-    }
-    
     public function about()
     {
         return $this->render('home/about.html.twig');

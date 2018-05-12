@@ -1,4 +1,7 @@
-<div class="row">
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
     <div class="col-md-8">
         <h1 class="page-header">
             Latest posts
@@ -23,3 +26,5 @@
 
     {% include 'init/sidebar.html.twig' %}
 </div>
+
+{% endblock %}

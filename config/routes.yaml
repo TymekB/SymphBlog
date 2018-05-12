@@ -4,7 +4,7 @@
 
 index:
     path: /
-    controller: App\Controller\HomeController::index
+    controller: App\Controller\PostsController::list
 
 about:
     path: /about
