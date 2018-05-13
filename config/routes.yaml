@@ -37,6 +37,10 @@ post_show:
     path: /post/show/{id}
     controller: App\Controller\PostsController::show
 
+post_delete:
+    path: /post/delete/{id}
+    controller: App\Controller\PostsController::delete
+
 dashboard_posts:
     path: /dashboard/posts
     controller: App\Controller\DashboardController::posts

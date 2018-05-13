@@ -70,4 +70,21 @@ class PostsController extends Controller
 
         return $this->render('posts/create.html.twig', ['form' => $form->createView()]);
     }
+
+    public function delete($id)
+    {
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+
+        if(!$post || $post->getAdmin()->getId() != $this->getUser()->getId()) {
+            throw $this->createNotFoundException("Post " . $id . " not found!");
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($post);
+        $entityManager->flush();
+
+        $this->addFlash("success", "Post deleted!");
+
+        return $this->redirectToRoute("index");
+    }
 }
