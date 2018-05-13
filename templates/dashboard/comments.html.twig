@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Comments</h1>
+    <hr>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Body</th>
+            <th>Post title</th>
+            <th>Created at</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.body }}</td>
+                <td>{{ comment.post.header }}</td>
+                <td>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

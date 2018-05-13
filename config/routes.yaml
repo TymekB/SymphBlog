@@ -37,3 +37,10 @@ post_show:
     path: /post/show/{id}
     controller: App\Controller\PostsController::show
 
+dashboard_posts:
+    path: /dashboard/posts
+    controller: App\Controller\DashboardController::posts
+
+dashboard_comments:
+    path: /dashboard/comments
+    controller: App\Controller\DashboardController::comments

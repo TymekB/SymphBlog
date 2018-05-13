@@ -35,9 +35,13 @@
 
                         <ul class="dropdown-menu">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="#">Posts <span class="badge">{{ app.user.posts|length }}</span></a></li>
+                                <li>
+                                    <a href="{{ path('dashboard_posts') }}">Posts</a>
+                                </li>
                             {% endif %}
-                            <li><a href="#">Comments</a></li>
+                            <li>
+                                <a href="{{ path('dashboard_comments') }}">Comments</a>
+                            </li>
                             <li><a href="{{ path('logout') }}">Logout</a></li>
                         </ul>
                     </li>

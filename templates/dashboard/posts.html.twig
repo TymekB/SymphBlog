@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Published posts</h1>
+    <hr>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Header</th>
+                <th>Created at</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.header }}</td>
+                    <td>{{ post.createdAt|date("F jS \\a\\t g:ia") }}</td>
+                    <td>{{ post.admin.username }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
