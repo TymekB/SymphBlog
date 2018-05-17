@@ -30,9 +30,9 @@ security:
 
     access_control:
         - { path: ^/post/create, roles: ROLE_ADMIN }
+        - { path: ^/post/edit/*, roles: ROLE_ADMIN }
         - { path: ^/post/show/*, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
         - { path: ^/post/delete/*, roles: ROLE_ADMIN }
-        - { path: ^/dashboard/posts, roles: ROLE_ADMIN }
-        - { path: ^/dashboard/comments, roles: ROLE_ADMIN }
+        - { path: ^/dashboard/*, roles: ROLE_ADMIN }
 
 

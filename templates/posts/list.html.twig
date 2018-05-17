@@ -21,19 +21,9 @@
             <hr>
             <p>{{ post.body|length > 150 ? post.body|slice(0, 150) : post.body }}</p>
 
-            <div class="pull-left">
-                <a class="btn btn-primary" href="{{ path('post_show', { id: post.id }) }}">
-                    Read More <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-            </div>
-
-            {% if app.user and post.admin.id == app.user.id %}
-                <div class="pull-right">
-                    <a href="#" class="btn btn-default">Edit</a>
-                    <a href="{{ path('post_delete', {'id': post.id }) }}" class="btn btn-danger">Delete</a>
-                </div>
-            {% endif %}
-            <div class="clearfix"></div>
+            <a class="btn btn-primary" href="{{ path('post_show', { id: post.id }) }}">
+                Read More <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
 
             <hr>
         {% endfor %}

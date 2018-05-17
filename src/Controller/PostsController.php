@@ -9,6 +9,7 @@ use App\Form\PostType;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {
@@ -69,6 +70,29 @@ class PostsController extends Controller
         }
 
         return $this->render('posts/create.html.twig', ['form' => $form->createView()]);
+    }
+
+    public function edit($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $post = $entityManager->getRepository(Post::class)->find($id);
+
+        if(!$post || $post->getAdmin()->getId() != $this->getUser()->getId()) {
+            throw $this->createNotFoundException("Post " . $id . " not found.");
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Post updated!');
+
+            return $this->redirectToRoute('post_show', ['id' => $id]);
+        }
+
+        return $this->render('posts/edit.html.twig', ['form' => $form->createView()]);
     }
 
     public function delete($id)

@@ -9,16 +9,28 @@
             <!-- Blog Post -->
 
             <!-- Title -->
+
             <h1>{{ post.header }}</h1>
 
             <!-- Author -->
-            <p class="lead">
-                by <a href="#">{{ post.admin.username }}</a>
-            </p>
+
+            <div class="pull-left">
+                <p class="lead">
+                    by <a href="#">{{ post.admin.username }}</a>
+                </p>
+            </div>
+            <div class="pull-right">
+                {% if app.user and post.admin.id == app.user.id %}
+                    <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-default btn-sm">Edit</a>
+                    <a href="{{ path('post_delete', {'id': post.id }) }}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+            </div>
+            <div class="clearfix"></div>
 
             <hr>
 
-            <!-- Date/Time -->
+            <!-- Date/Time and actions -->
+
             <p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
 
             <hr>
@@ -61,7 +73,6 @@
                         <h4 class="media-heading">{{ comment.getUser().username }}
                             <small>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</small>
                             <a href="#" class="btn btn-default btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Delete</a>
-
                         </h4>
                         {{ comment.body }}
                     </div>
