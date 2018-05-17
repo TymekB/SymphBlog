@@ -67,6 +67,8 @@ class PostsController extends Controller
             $entityManager->flush();
 
             $this->addFlash('success', "Post created!");
+
+            return $this->redirectToRoute('dashboard_posts');
         }
 
         return $this->render('posts/create.html.twig', ['form' => $form->createView()]);

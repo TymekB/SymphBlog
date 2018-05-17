@@ -20,6 +20,11 @@
         {% block javascripts %}
             <script src="{{ asset('js/jquery.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+            <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+            <script>
+                CKEDITOR.replace( 'article-ckeditor' );
+            </script>
         {% endblock %}
     </body>
 </html>

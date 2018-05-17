@@ -19,6 +19,6 @@ class PostType extends AbstractType
     {
         $builder
             ->add('header', TextType::class)
-            ->add('body', TextareaType::Class, ['attr' => ['rows' => '15']]);
+            ->add('body', TextareaType::Class, ['attr' => ['id' => 'article-ckeditor']]);
     }
 }

@@ -19,7 +19,7 @@
             <hr>
             <img class="img-responsive" src="http://placehold.it/900x300" alt="">
             <hr>
-            <p>{{ post.body|length > 150 ? post.body|slice(0, 150) : post.body }}</p>
+            <p>{{ post.body|length > 150 ? post.body|slice(0, 150)|raw : post.body|raw }}</p>
 
             <a class="btn btn-primary" href="{{ path('post_show', { id: post.id }) }}">
                 Read More <span class="glyphicon glyphicon-chevron-right"></span>
