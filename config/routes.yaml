@@ -49,6 +49,10 @@ comment_edit:
     path: /comment/edit/{id}
     controller: App\Controller\CommentsController::edit
 
+comment_delete:
+    path: /comment/delete/{id}
+    controller: App\Controller\CommentsController::delete
+
 dashboard_posts:
     path: /dashboard/posts
     controller: App\Controller\DashboardController::posts

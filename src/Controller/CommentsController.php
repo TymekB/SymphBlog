@@ -33,4 +33,21 @@ class CommentsController extends Controller
 
         return $this->render('comments/edit.html.twig', ['form' => $form->createView()]);
     }
+
+    public function delete($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+
+        if(!$comment || $comment->getUser()->getId() != $this->getUser()->getId()) {
+            throw $this->createNotFoundException("Comment " . $id . " not found!");
+        }
+
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        $this->addFlash("success", "Comment deleted!");
+
+        return $this->redirectToRoute("post_show", ['id' => $comment->getPost()->getId()]);
+    }
 }
