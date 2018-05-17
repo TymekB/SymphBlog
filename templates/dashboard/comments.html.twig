@@ -11,6 +11,9 @@
             <th>Body</th>
             <th>Post title</th>
             <th>Created at</th>
+            {% if is_granted('ROLE_ADMIN') %}
+                <th>Author</th>
+            {% endif %}
         </tr>
         </thead>
 
@@ -20,6 +23,9 @@
                 <td>{{ comment.body }}</td>
                 <td>{{ comment.post.header }}</td>
                 <td>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ comment.user.username }}</td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
