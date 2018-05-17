@@ -16,7 +16,7 @@
 
         <tbody>
         {% for comment in comments %}
-            <tr>
+            <tr class="clickable-row" data-href="{{ path('post_show', {'id': comment.post.id}) }}">
                 <td>{{ comment.body }}</td>
                 <td>{{ comment.post.header }}</td>
                 <td>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</td>

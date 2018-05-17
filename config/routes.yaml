@@ -45,6 +45,10 @@ post_delete:
     path: /post/delete/{id}
     controller: App\Controller\PostsController::delete
 
+comment_edit:
+    path: /comment/edit/{id}
+    controller: App\Controller\CommentsController::edit
+
 dashboard_posts:
     path: /dashboard/posts
     controller: App\Controller\DashboardController::posts

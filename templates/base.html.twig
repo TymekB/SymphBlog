@@ -23,6 +23,11 @@
 
             <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
             <script>
+                $('.clickable-row').click(function() {
+                    console.log('test');
+                    location.href = $(this).data('href');
+                });
+
                 CKEDITOR.replace( 'article-ckeditor' );
             </script>
         {% endblock %}

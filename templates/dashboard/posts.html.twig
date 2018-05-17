@@ -30,13 +30,3 @@
     {% include 'init/messages.html.twig' %}
 
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $('.clickable-row').click(function() {
-            location.href = $(this).data('href');
-        });
-
-    </script>
-{% endblock %}
