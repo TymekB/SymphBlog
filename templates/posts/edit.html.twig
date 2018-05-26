@@ -7,6 +7,8 @@
             <hr>
             {{ form_start(form) }}
             {{ form_row(form.header) }}
+            {{ form_row(form.categories) }}
+
             <div class="form-group">
                 {{ form_widget(form.body, {'id': 'article-ckeditor'}) }}
             </div>

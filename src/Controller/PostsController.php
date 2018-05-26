@@ -7,11 +7,8 @@ use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
 use DateTime;
-use HTMLPurifier;
-use HTMLPurifier_Config;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {

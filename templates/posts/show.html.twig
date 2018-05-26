@@ -43,6 +43,10 @@
             <!-- Post Content -->
             <p class="text-justify">{{ post.body|raw }}</p>
 
+            <h3>Categories</h3>
+            {% for category in post.categories %}
+                <span class="label label-default">{{ category.name }}</span>
+            {% endfor %}
             <hr>
 
             <!-- Blog Comments -->
