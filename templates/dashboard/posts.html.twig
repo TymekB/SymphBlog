@@ -13,6 +13,7 @@
                 <th>Header</th>
                 <th>Created at</th>
                 <th>Author</th>
+                <th>Categories</th>
             </tr>
         </thead>
 
@@ -22,6 +23,11 @@
                     <td>{{ post.header }}</td>
                     <td>{{ post.createdAt|date("F jS \\a\\t g:ia") }}</td>
                     <td>{{ post.admin.username }}</td>
+                    <td>
+                    {% for category in post.categories %}
+                        <span class="label label-default">{{ category.name }}</span>
+                    {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
