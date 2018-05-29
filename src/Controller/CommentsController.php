@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +13,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CommentsController extends Controller
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, CommentRepository $commentRepository)
+    {
+        $this->entityManager = $entityManager;
+        $this->commentRepository = $commentRepository;
+    }
+
+
     public function edit($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -36,15 +54,14 @@ class CommentsController extends Controller
 
     public function delete($id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $comment = $entityManager->getRepository(Comment::class)->find($id);
+        $comment = $this->commentRepository->find($id);
 
         if(!$comment || $comment->getUser()->getId() != $this->getUser()->getId()) {
             throw $this->createNotFoundException("Comment " . $id . " not found!");
         }
 
-        $entityManager->remove($comment);
-        $entityManager->flush();
+        $this->entityManager->remove($comment);
+        $this->entityManager->flush();
 
         $this->addFlash("success", "Comment deleted!");
 

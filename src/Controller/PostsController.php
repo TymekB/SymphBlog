@@ -6,26 +6,39 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
+use App\Repository\PostRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostsController extends Controller
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var PostRepository
+     */
+    private $postRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, PostRepository $postRepository)
+    {
+        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
+    }
+
     public function list()
     {
-        $posts = $this->getDoctrine()
-            ->getRepository(Post::class)
-            ->findBy([], ['createdAt' => "DESC"]);
+        $posts = $this->postRepository->findBy([], ['createdAt' => "DESC"]);
 
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
 
     public function show(Request $request, $id)
     {
-        $post = $this->getDoctrine()
-            ->getRepository(Post::class)
-            ->find($id);
+        $post = $this->postRepository->find($id);
 
         if(!$post) {
             throw $this->createNotFoundException("Post " . $id . " not found");
@@ -40,9 +53,8 @@ class PostsController extends Controller
             $comment->setPost($post);
             $comment->setCreatedAt(new DateTime());
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
 
             $this->addFlash('success', "Comment created");
         }
@@ -61,9 +73,8 @@ class PostsController extends Controller
             $post->setAdmin($this->getUser());
             $post->setCreatedAt(new DateTime());
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+            $this->entityManager->persist($post);
+            $this->entityManager->flush();
 
             $this->addFlash('success', "Post created!");
 
@@ -98,15 +109,14 @@ class PostsController extends Controller
 
     public function delete($id)
     {
-        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        $post = $this->postRepository->find($id);
 
         if(!$post || $post->getAdmin()->getId() != $this->getUser()->getId()) {
             throw $this->createNotFoundException("Post " . $id . " not found!");
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($post);
-        $entityManager->flush();
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
 
         $this->addFlash("success", "Post deleted!");
 
