@@ -26,11 +26,11 @@ class Category
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="categories")
      */
-    private $post;
+    private $posts;
 
     public function __construct()
     {
-        $this->post = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId()
@@ -53,15 +53,15 @@ class Category
     /**
      * @return Collection|Post[]
      */
-    public function getPost(): Collection
+    public function getPosts(): Collection
     {
-        return $this->post;
+        return $this->posts;
     }
 
     public function addPost(Post $post): self
     {
-        if (!$this->post->contains($post)) {
-            $this->post[] = $post;
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
         }
 
         return $this;
@@ -69,8 +69,8 @@ class Category
 
     public function removePost(Post $post): self
     {
-        if ($this->post->contains($post)) {
-            $this->post->removeElement($post);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
         }
 
         return $this;

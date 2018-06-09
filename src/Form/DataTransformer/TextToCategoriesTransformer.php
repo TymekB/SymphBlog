@@ -9,11 +9,24 @@
 namespace App\Form\DataTransformer;
 
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class TextToCategoriesTransformer implements DataTransformerInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
     /**
      * Transforms a value from the original representation to a transformed representation.
      *
@@ -78,10 +91,16 @@ class TextToCategoriesTransformer implements DataTransformerInterface
     {
         $value = str_replace(' ', '', $value);
         $categoriesArray = explode(',', $value);
+        $categoriesArray = array_unique($categoriesArray);
 
         $categories = array_map(function($value){
-            $category = new Category();
-            $category->setName($value);
+
+            $category = $this->entityManager->getRepository(Category::class)->findOneBy(['name' => $value]);
+
+            if(!$category) {
+                $category = new Category();
+                $category->setName($value);
+            }
 
             return $category;
 

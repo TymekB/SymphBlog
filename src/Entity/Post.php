@@ -45,7 +45,7 @@ class Post
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="post", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="posts", cascade={"persist", "remove"})
      */
     private $categories;
 

@@ -2,15 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Category\CategoryCreator;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {
@@ -22,16 +27,34 @@ class PostsController extends Controller
      * @var PostRepository
      */
     private $postRepository;
+    /**
+     * @var CategoryCreator
+     */
+    private $categoryCreator;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, PostRepository $postRepository)
+    public function __construct(EntityManagerInterface $entityManager, PostRepository $postRepository, CategoryRepository $categoryRepository, CategoryCreator $categoryCreator)
     {
         $this->entityManager = $entityManager;
         $this->postRepository = $postRepository;
+        $this->categoryCreator = $categoryCreator;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function list()
     {
         $posts = $this->postRepository->findBy([], ['createdAt' => "DESC"]);
+
+        return $this->render('posts/list.html.twig', ['posts' => $posts]);
+    }
+
+    public function listCategory($id)
+    {
+        $category = $this->categoryRepository->find($id);
+        $posts = $category->getPosts();
 
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
@@ -69,11 +92,14 @@ class PostsController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($post);
+
+            $categories = $form->get('categories')->getData();
+            $this->categoryCreator->create($post, $categories);
 
             $post->setAdmin($this->getUser());
             $post->setCreatedAt(new DateTime());
 
-            $this->entityManager->persist($post);
             $this->entityManager->flush();
 
             $this->addFlash('success', "Post created!");
@@ -94,9 +120,13 @@ class PostsController extends Controller
         }
 
         $form = $this->createForm(PostType::class, $post);
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $categories = $form->get('categories')->getData();
+            $this->categoryCreator->create($post, $categories);
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Post updated!');
