@@ -29,6 +29,7 @@ security:
             provider: chain_provider
 
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/post/create, roles: ROLE_ADMIN }
         - { path: ^/post/edit/*, roles: ROLE_ADMIN }
         - { path: ^/post/show/*, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }

@@ -46,7 +46,7 @@ post_delete:
     controller: App\Controller\PostsController::delete
 
 post_category_list:
-    path: /post/category/{id}
+    path: /post/category/{name}
     controller: App\Controller\PostsController::listCategory
 
 comment_edit:

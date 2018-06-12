@@ -36,6 +36,7 @@
                         <ul class="dropdown-menu">
                             {% if is_granted('ROLE_ADMIN') %}
                                 <li>
+                                    <a href="/admin"><b>EasyAdmin</b></a>
                                     <a href="{{ path('dashboard_posts') }}">Posts</a>
                                 </li>
                             {% endif %}

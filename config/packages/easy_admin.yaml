@@ -1,0 +1,20 @@
+easy_admin:
+    entities:
+        Post:
+            class: App\Entity\Post
+            form:
+
+            edit:
+                fields:
+                    - header
+                    - body
+                    - admin
+                    - categories
+                    - createdAt
+
+        Category:
+            class: App\Entity\Category
+
+        Comments:
+            class: App\Entity\Comment
+

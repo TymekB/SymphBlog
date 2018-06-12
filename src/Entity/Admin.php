@@ -26,6 +26,12 @@ class Admin extends User
         $this->posts = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+
     /**
      * Returns the roles granted to the user.
      *

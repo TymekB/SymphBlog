@@ -51,9 +51,17 @@ class PostsController extends Controller
         return $this->render('posts/list.html.twig', ['posts' => $posts]);
     }
 
-    public function listCategory($id)
+    /**
+     * @param Category $category
+     * @return Response
+     * @ParamConverter()
+     */
+    public function listCategory(Category $category = null)
     {
-        $category = $this->categoryRepository->find($id);
+        if(empty($category)) {
+            throw $this->createNotFoundException("Category not found");
+        }
+
         $posts = $category->getPosts();
 
         return $this->render('posts/list.html.twig', ['posts' => $posts]);

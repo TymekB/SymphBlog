@@ -55,6 +55,11 @@ class Post
         $this->categories = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->header;
+    }
+
     public function getId()
     {
         return $this->id;
